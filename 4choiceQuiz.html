@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4択クイズ</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --background-color: #f9fafb;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .quiz-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px var(--card-shadow);
+            max-width: 600px;
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .quiz-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px var(--card-shadow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .options button {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .options button:hover {
+            background: var(--primary-hover);
+        }
+
+        .result {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>4択クイズ</h1>
+        <div id="quiz">
+            <!-- JavaScriptでクイズ内容を動的に挿入 -->
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "日本の首都はどこですか？",
+                options: ["大阪", "京都", "東京", "福岡"],
+                correct: 2
+            },
+            {
+                question: "地球は何番目の惑星ですか？",
+                options: ["1番目", "3番目", "5番目", "7番目"],
+                correct: 1
+            },
+            {
+                question: "富士山の標高はおよそ何メートルですか？",
+                options: ["2776m", "3776m", "4776m", "5776m"],
+                correct: 1
+            },
+            {
+                question: "プログラミング言語のHTMLは何の略ですか？",
+                options: [
+                    "Hyper Text Markup Language",
+                    "Hyperlink Text Making Language",
+                    "High Text Machine Learning",
+                    "Hyper Tool Mark Language"
+                ],
+                correct: 0
+            },
+            {
+                question: "太陽系で最も大きな惑星はどれですか？",
+                options: ["火星", "木星", "金星", "土星"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 100;
+
+        const quizContainer = document.getElementById("quiz");
+        const resultContainer = document.getElementById("result");
+
+        function loadQuestion() {
+            if (currentQuestion < quizData.length) {
+                const questionData = quizData[currentQuestion];
+                quizContainer.innerHTML = `
+                    <div class="question">${questionData.question}</div>
+                    <div class="options">
+                        ${questionData.options
+                            .map(
+                                (option, index) =>
+                                    `<button onclick="checkAnswer(${index})">${option}</button>`
+                            )
+                            .join("")}
+                    </div>
+                `;
+            } else {
+                quizContainer.innerHTML = "";
+                resultContainer.innerHTML = `あなたの得点は <strong>${score}</strong> 点です！`;
+            }
+        }
+
+        function checkAnswer(selected) {
+            const correctAnswer = quizData[currentQuestion].correct;
+            if (selected !== correctAnswer) {
+                score -= 20;
+            }
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
