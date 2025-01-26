@@ -83,7 +83,7 @@
 </head>
 <body>
     <div class="quiz-container">
-        <h1>4択クイズ</h1>
+        <h1 id="quiz-title">4択クイズ</h1>
         <div id="quiz">
             <!-- JavaScriptでクイズ内容を動的に挿入 -->
         </div>
@@ -92,68 +92,104 @@
 
     <script>
         const quizData = [
-            {
-                question: "日本の首都はどこですか？",
-                options: ["大阪", "京都", "東京", "福岡"],
-                correct: 2
-            },
-            {
-                question: "地球は何番目の惑星ですか？",
-                options: ["1番目", "3番目", "5番目", "7番目"],
-                correct: 1
-            },
-            {
-                question: "富士山の標高はおよそ何メートルですか？",
-                options: ["2776m", "3776m", "4776m", "5776m"],
-                correct: 1
-            },
-            {
-                question: "プログラミング言語のHTMLは何の略ですか？",
-                options: [
-                    "Hyper Text Markup Language",
-                    "Hyperlink Text Making Language",
-                    "High Text Machine Learning",
-                    "Hyper Tool Mark Language"
-                ],
-                correct: 0
-            },
-            {
-                question: "太陽系で最も大きな惑星はどれですか？",
-                options: ["火星", "木星", "金星", "土星"],
-                correct: 1
-            }
+            { question: "GDPとは何を表す指標ですか？", options: ["国内総生産", "国民総所得", "貿易収支", "物価上昇率"], correct: 0 ,difficulty: 1},
+            { question: "需要と供給の交点が示すものは？", options: ["市場価格", "均衡価格", "最大価格", "最低価格"], correct: 1 ,difficulty: 17},
+            { question: "インフレーションの原因はどれ？", options: ["通貨供給の増加", "貿易赤字の拡大", "失業率の低下", "技術進歩"], correct: 0 ,difficulty: 13},
+            { question: "中央銀行の主な役割は？", options: ["金融政策の実施", "税金の徴収", "政府予算の作成", "社会福祉の提供"], correct: 0 ,difficulty: 12},
+            { question: "デフレーションの特徴は？", options: ["物価の下落", "失業率の低下", "経済成長率の上昇", "輸出の増加"], correct: 0 ,difficulty: 11},
+            { question: "比較優位の法則を説明する学者は？", options: ["アダム・スミス", "デヴィッド・リカード", "ジョン・メイナード・ケインズ", "カール・マルクス"], correct: 1 ,difficulty: 24},
+            { question: "フリーライダー問題が発生するのは？", options: ["公共財", "私的財", "劣等財", "高級財"], correct: 0 ,difficulty: 20},
+            { question: "オリガポリー市場の特徴は？", options: ["少数の企業が支配", "完全競争", "独占市場", "参入障壁が低い"], correct: 0 ,difficulty: 29},
+            { question: "フィリップス曲線が示す関係は？", options: ["失業率とインフレ率", "物価と生産量", "金利と投資", "輸出と輸入"], correct: 0 ,difficulty: 18},
+            { question: "ケインズ経済学の核心概念は？", options: ["有効需要の原理", "自由市場の優位性", "労働分配率", "技術革新の促進"], correct: 0 ,difficulty: 19},
+            { question: "パレート効率性の条件は？", options: ["資源配分の最適化", "完全な所得平等", "最大限の経済成長", "政府の積極介入"], correct: 0 ,difficulty: 26},
+            { question: "マネタリズムを提唱したのは？", options: ["ミルトン・フリードマン", "ジョン・ヒックス", "アダム・スミス", "ジョン・ロールズ"], correct: 0 ,difficulty: 31},
+            { question: "グローバリゼーションが進むとどうなる？", options: ["貿易が活発化", "国内生産の減少", "為替レートの固定化", "関税率の上昇"], correct: 0 ,difficulty: 10},
+            { question: "ゲーム理論でナッシュ均衡とは？", options: ["各プレイヤーが最適戦略を選ぶ状態", "価格競争が激化する状態", "完全市場が成立する状態", "独占的行動が取られる状態"], correct: 0 ,difficulty: 25},
+            { question: "国際収支統計に含まれるのは？", options: ["貿易収支", "雇用統計", "税収額", "物価指数"], correct: 0 ,difficulty: 3},
+            { question: "資本市場の効率性を示す理論は？", options: ["効率的市場仮説", "均衡市場理論", "完全市場仮説", "資本蓄積理論"], correct: 0 ,difficulty: 9},
+            { question: "関税を引き上げるとどうなる？", options: ["輸入が減少する", "輸出が減少する", "国内産業が縮小する", "貿易黒字が拡大する"], correct: 0 ,difficulty: 2},
+            { question: "累進課税制度の目的は？", options: ["所得格差の是正", "経済成長の促進", "財政赤字の削減", "貿易収支の改善"], correct: 0 ,difficulty: 8},
+            { question: "外部性の問題を解決する手段は？", options: ["課税や補助金", "関税の引き下げ", "公共財の提供", "通貨供給の増加"], correct: 0 ,difficulty: 7},
+            { question: "政府が財政赤字を増やすと？", options: ["公債残高が増加", "金利が低下", "失業率が増加", "貿易黒字が拡大"], correct: 0 ,difficulty: 6},
+            { question: "国債の発行によるリスクは？", options: ["将来世代への負担", "資本投資の減少", "輸出の急増", "インフレの抑制"], correct: 0 ,difficulty: 27},
+            { question: "固定為替相場制の特徴は？", options: ["為替レートが一定", "変動幅が大きい", "金利が変動", "通貨供給が増加"], correct: 0 ,difficulty: 16},
+            { question: "通貨の価値が下がると？", options: ["輸出が増加する", "輸入が増加する", "貿易赤字が拡大する", "金利が上昇する"], correct: 0 ,difficulty: 23},
+            { question: "インフレターゲット政策の目標は？", options: ["物価安定", "失業率の上昇", "輸出拡大", "金利の固定化"], correct: 0 ,difficulty: 14},
+            { question: "ビルトイン・スタビライザーの例は？", options: ["累進課税制度", "固定為替相場", "自由貿易協定", "公共事業"], correct: 0 ,difficulty: 22},
+            { question: "ハイパーインフレの原因は？", options: ["通貨供給の急増", "貿易収支の改善", "失業率の低下", "技術革新の加速"], correct: 0 ,difficulty: 4},
+            { question: "トリクルダウン理論の主張は？", options: ["富裕層の富が全体に広がる", "所得格差が経済成長を促進", "貧困層の消費が経済を牽引", "政府支出が生産性を向上"], correct: 0 ,difficulty: 30},
+            { question: "プライマリーバランスが黒字になると？", options: ["財政の健全化", "金利が上昇", "失業率が増加", "インフレ率の低下"], correct: 0 ,difficulty: 15},
+            { question: "スタグフレーションとは？", options: ["インフレと失業の共存", "物価安定と経済成長", "貿易赤字と景気拡大", "通貨供給の増加と成長"], correct: 0 ,difficulty: 5},
+            { question: "「ベアマーケット」とは何を指しますか？", options: ["株価が上昇している市場", "株価が横ばいの市場", "株価が下落している市場", "株価が急上昇している市場"], correct: 2 ,difficulty: 21},
+            { question: "PER（株価収益率）とは何を示す指標ですか？", options: ["株価と配当金の比率", "株価と純利益の比率", "株価と売上高の比率", "株価と資産の比率"], correct: 1 ,difficulty: 28}
         ];
 
-        let currentQuestion = 0;
-        let score = 100;
+        let currentDifficulty = 16; // 初期難易度を設定
+        let score = 50;
+        let currentQuestion = 1;
+        const totalQuestions = 5;
 
         const quizContainer = document.getElementById("quiz");
         const resultContainer = document.getElementById("result");
+        const quizTitle = document.getElementById("quiz-title");
+
+        // シャッフル関数
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function updateTitle() {
+            quizTitle.textContent = `4択クイズ ${currentQuestion}/${totalQuestions}`;
+        }
 
         function loadQuestion() {
-            if (currentQuestion < quizData.length) {
-                const questionData = quizData[currentQuestion];
+            const questionSet = quizData.filter(q => q.difficulty === currentDifficulty);
+            if (currentQuestion < 6) {
+                const questionData = questionSet[0];
+
+                // 選択肢をシャッフル
+                const shuffledOptions = [...questionData.options];
+                shuffle(shuffledOptions);
+
+                // 正解インデックスを更新
+                const correctIndex = shuffledOptions.indexOf(questionData.options[questionData.correct]);
+
                 quizContainer.innerHTML = `
                     <div class="question">${questionData.question}</div>
                     <div class="options">
-                        ${questionData.options
+                        ${shuffledOptions
                             .map(
                                 (option, index) =>
-                                    `<button onclick="checkAnswer(${index})">${option}</button>`
+                                    `<button onclick="checkAnswer(${index}, ${correctIndex})">${option}</button>`
                             )
                             .join("")}
                     </div>
                 `;
             } else {
                 quizContainer.innerHTML = "";
-                resultContainer.innerHTML = `あなたの得点は <strong>${score}</strong> 点です！`;
+                resultContainer.innerHTML = `あなたの偏差値は <strong>${score.toFixed(1)}</strong> です！
+                <br><br>
+            <a 
+             href="https://x.com/intent/x?text=4択クイズで偏差値${score.toFixed(1)}を獲得しました！挑戦してみてください！&url=https://example.com" 
+             target="_blank" 
+              style="display: inline-block; padding: 10px 15px; background: black; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+              結果をＸで共有
+            </a>
+            `;
             }
         }
 
-        function checkAnswer(selected) {
-            const correctAnswer = quizData[currentQuestion].correct;
-            if (selected !== correctAnswer) {
-                score -= 20;
+        function checkAnswer(selected, correctIndex) {
+            if (selected !== correctIndex) {
+                score -= 4.3;
+                currentDifficulty = currentDifficulty - 2**(4 - currentQuestion); // 難易度を下げる
+            } else {
+                score += 4.5;
+                currentDifficulty = currentDifficulty + 2**(4 - currentQuestion); // 難易度を上げる
             }
             currentQuestion++;
             loadQuestion();
